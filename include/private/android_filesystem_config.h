@@ -100,6 +100,8 @@
 #define AID_CACHE         2001  /* cache access */
 #define AID_DIAG          2002  /* access to diagnostic resources */
 
+#define AID_IDD           2987  /* can read/write /dev/idd */
+
 /* The range 2900-2999 is reserved for OEM, and must never be
  * used here */
 #define AID_OEM_RESERVED_START 2900
@@ -121,6 +123,9 @@
 /* The range 5000-5999 is also reserved for OEM, and must never be used here. */
 #define AID_OEM_RESERVED_2_START 5000
 #define AID_OEM_RESERVED_2_END   5999
+
+#define AID_QCOM_ONCRPC   3009  /* can read/write /dev/oncrpc files */
+#define AID_QCOM_DIAG     3010  /* can read/write /dev/diag */
 
 #define AID_EVERYBODY     9997  /* shared between all apps in the same profile */
 #define AID_MISC          9998  /* access to misc storage */
@@ -212,6 +217,8 @@ static const struct android_id_info android_ids[] = {
     { "cache",         AID_CACHE, },
     { "diag",          AID_DIAG, },
 
+    { "idd",           AID_IDD, },
+
     { "net_bt_admin",  AID_NET_BT_ADMIN, },
     { "net_bt",        AID_NET_BT, },
     { "inet",          AID_INET, },
@@ -222,6 +229,9 @@ static const struct android_id_info android_ids[] = {
     { "net_bt_stack",  AID_NET_BT_STACK, },
     { "readproc",      AID_READPROC, },
     { "wakelock",      AID_WAKELOCK, },
+
+    { "qcom_oncrpc",   AID_QCOM_ONCRPC, },
+    { "qcom_diag",     AID_QCOM_DIAG, },
 
     { "everybody",     AID_EVERYBODY, },
     { "misc",          AID_MISC, },
