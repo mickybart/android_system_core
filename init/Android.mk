@@ -72,6 +72,10 @@ LOCAL_SRC_FILES:= \
     ueventd_parser.cpp \
     watchdogd.cpp \
 
+ifeq ($(TARGET_HAS_LEGACY_SHUTDOWN),true)
+    LOCAL_CPPFLAGS += -DLEGACY_SHUTDOWN
+endif
+
 LOCAL_MODULE:= init
 LOCAL_C_INCLUDES += \
     system/extras/ext4_utils \
