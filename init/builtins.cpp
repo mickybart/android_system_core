@@ -110,6 +110,7 @@ done:
     return ret;
 }
 
+#ifndef LEGACY_SHUTDOWN
 // Turn off backlight while we are performing power down cleanup activities.
 static void turnOffBacklight() {
     static const char off[] = "0";
@@ -135,6 +136,7 @@ static void turnOffBacklight() {
         android::base::WriteStringToFile(off, fileName);
     }
 }
+#endif
 
 static int wipe_data_via_recovery(const std::string& reason) {
     const std::vector<std::string> options = {"--wipe_data", std::string() + "--reason=" + reason};
@@ -147,6 +149,7 @@ static int wipe_data_via_recovery(const std::string& reason) {
     while (1) { pause(); }  // never reached
 }
 
+#ifndef LEGACY_SHUTDOWN
 static void unmount_and_fsck(const struct mntent *entry) {
     if (strcmp(entry->mnt_type, "f2fs") && strcmp(entry->mnt_type, "ext4"))
         return;
@@ -223,6 +226,7 @@ static void unmount_and_fsck(const struct mntent *entry) {
                                 &st, true, LOG_KLOG, true, NULL, NULL, 0);
     }
 }
+#endif
 
 static int do_class_start(const std::vector<std::string>& args) {
         /* Starting a class does not start services
@@ -715,7 +719,9 @@ static int do_powerctl(const std::vector<std::string>& args) {
             !strcmp(&command[len + 1], "userrequested")) {
             // The shutdown reason is PowerManager.SHUTDOWN_USER_REQUESTED.
             // Run fsck once the file system is remounted in read-only mode.
+#ifndef LEGACY_SHUTDOWN
             callback_on_ro_remount = unmount_and_fsck;
+#endif
         } else if (cmd == ANDROID_RB_RESTART2) {
             reboot_target = &command[len + 1];
         }
